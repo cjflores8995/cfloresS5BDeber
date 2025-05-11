@@ -64,5 +64,39 @@ namespace cfloresS5B.Models
 
             return new List<Persona>();
         }
+
+        public void UpdatePerson(Persona persona)
+        {
+            try
+            {
+                int result = conn.Update(persona);
+                StatusMessage = $"{result} persona actualizada: Id={persona.Id}";
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Error al actualizar: {ex.Message}";
+            }
+        }
+
+        public void DeletePerson(int id)
+        {
+            try
+            {
+                var persona = conn.Find<Persona>(id);
+                if (persona != null)
+                {
+                    int result = conn.Delete(persona);
+                    StatusMessage = $"{result} Persona eliminada: Id={id}";
+                }
+                else
+                {
+                    StatusMessage = $"No se encontró registro con Id={id}";
+                }
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Error al eliminar: {ex.Message}";
+            }
+        }
     }
 }
